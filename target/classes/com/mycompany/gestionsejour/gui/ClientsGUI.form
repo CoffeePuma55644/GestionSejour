@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+
+  <SubComponents>
+
+    <!-- FORMULAIRE AJOUT CLIENT EN HAUT -->
+    <Container class="javax.swing.JPanel" name="panelFormClient">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"
+                    value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+          <BorderConstraints direction="North"/>
+        </Constraint>
+      </Constraints>
+      <Properties>
+        <Property name="background" type="java.awt.Color">
+          <Color red="241" green="245" blue="249" type="1"/>
+        </Property>
+        <Property name="border" type="javax.swing.border.Border"
+                  editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Ajouter un client"/>
+          </Border>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension">
+          <Dimension value="[0, 170]"/>
+        </Property>
+      </Properties>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+      <SubComponents>
+
+        <Component class="javax.swing.JLabel" name="labelNom">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="0" gridY="0" fill="0"
+                insetsTop="12" insetsLeft="15" insetsBottom="5" insetsRight="5"
+                anchor="17" weightX="0.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Nom :"/>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="1"/></Property>
+          </Properties>
+        </Component>
+
+        <Component class="javax.swing.JTextField" name="fieldNom">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="1" gridY="0" fill="2"
+                insetsTop="12" insetsLeft="5" insetsBottom="5" insetsRight="15"
+                anchor="17" weightX="1.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+
+        <Component class="javax.swing.JLabel" name="labelPrenom">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="2" gridY="0" fill="0"
+                insetsTop="12" insetsLeft="15" insetsBottom="5" insetsRight="5"
+                anchor="17" weightX="0.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Prénom :"/>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="1"/></Property>
+          </Properties>
+        </Component>
+
+        <Component class="javax.swing.JTextField" name="fieldPrenom">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="3" gridY="0" fill="2"
+                insetsTop="12" insetsLeft="5" insetsBottom="5" insetsRight="15"
+                anchor="17" weightX="1.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+
+        <Component class="javax.swing.JLabel" name="labelTel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="0" gridY="1" fill="0"
+                insetsTop="5" insetsLeft="15" insetsBottom="5" insetsRight="5"
+                anchor="17" weightX="0.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Téléphone :"/>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="1"/></Property>
+          </Properties>
+        </Component>
+
+        <Component class="javax.swing.JTextField" name="fieldTel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="1" gridY="1" fill="2"
+                insetsTop="5" insetsLeft="5" insetsBottom="5" insetsRight="15"
+                anchor="17" weightX="1.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+
+        <Component class="javax.swing.JLabel" name="labelAdresse">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="2" gridY="1" fill="0"
+                insetsTop="5" insetsLeft="15" insetsBottom="5" insetsRight="5"
+                anchor="17" weightX="0.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Adresse :"/>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="1"/></Property>
+          </Properties>
+        </Component>
+
+        <Component class="javax.swing.JTextField" name="fieldAdresse">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="3" gridY="1" fill="2"
+                insetsTop="5" insetsLeft="5" insetsBottom="5" insetsRight="15"
+                anchor="17" weightX="1.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+
+        <Component class="javax.swing.JButton" name="btnAjouterClient">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"
+                        value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="0" gridY="2" gridWidth="4" fill="0"
+                insetsTop="12" insetsLeft="15" insetsBottom="12" insetsRight="15"
+                anchor="10" weightX="0.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ajouter le client"/>
+            <Property name="background" type="java.awt.Color">
+              <Color red="37" green="99" blue="235" type="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color">
+              <Color red="255" green="255" blue="255" type="1"/>
+            </Property>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="13" style="1"/></Property>
+            <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="cursor" type="java.awt.Cursor"><Cursor type="12"/></Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener"
+                          parameters="java.awt.event.ActionEvent" handler="btnAjouterClientActionPerformed"/>
+          </Events>
+        </Component>
+
+      </SubComponents>
+    </Container>
+
+    <!-- BARRE BAS : RAFRAICHIR -->
+    <Container class="javax.swing.JPanel" name="panelSudClient">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"
+                    value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+          <BorderConstraints direction="South"/>
+        </Constraint>
+      </Constraints>
+      <Properties>
+        <Property name="background" type="java.awt.Color">
+          <Color red="241" green="245" blue="249" type="1"/>
+        </Property>
+      </Properties>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="btnRafraichirClients">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Rafraîchir la liste"/>
+            <Property name="background" type="java.awt.Color">
+              <Color red="30" green="58" blue="138" type="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color">
+              <Color red="255" green="255" blue="255" type="1"/>
+            </Property>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="0"/></Property>
+            <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="cursor" type="java.awt.Cursor"><Cursor type="12"/></Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener"
+                          parameters="java.awt.event.ActionEvent" handler="btnRafraichirClientsActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+
+    <!-- TABLEAU DES CLIENTS -->
+    <Container class="javax.swing.JScrollPane" name="scrollClients">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"
+                    value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+          <BorderConstraints direction="Center"/>
+        </Constraint>
+      </Constraints>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="tableClients">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel"
+                      editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="5" rowCount="0">
+                <Column editable="false" title="ID" type="java.lang.Object"/>
+                <Column editable="false" title="Nom" type="java.lang.Object"/>
+                <Column editable="false" title="Prénom" type="java.lang.Object"/>
+                <Column editable="false" title="Téléphone" type="java.lang.Object"/>
+                <Column editable="false" title="Adresse" type="java.lang.Object"/>
+              </Table>
+            </Property>
+            <Property name="autoResizeMode" type="int" value="4"/>
+            <Property name="rowHeight" type="int" value="28"/>
+            <Property name="gridColor" type="java.awt.Color">
+              <Color red="191" green="219" blue="254" type="1"/>
+            </Property>
+            <Property name="selectionBackground" type="java.awt.Color">
+              <Color red="59" green="130" blue="246" type="1"/>
+            </Property>
+            <Property name="selectionForeground" type="java.awt.Color">
+              <Color red="255" green="255" blue="255" type="1"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+
+  </SubComponents>
+</Form>
