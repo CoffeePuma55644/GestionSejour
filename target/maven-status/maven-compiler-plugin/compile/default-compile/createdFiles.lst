@@ -1,0 +1,10 @@
+com\mycompany\gestionsejour\modeles\Chambre.class
+com\mycompany\gestionsejour\database\ConnexionBDD.class
+com\mycompany\gestionsejour\modeles\Sejour.class
+com\mycompany\gestionsejour\Interface.class
+com\mycompany\gestionsejour\modeles\Service.class
+com\mycompany\gestionsejour\database\RequetesSQL.class
+com\mycompany\gestionsejour\GestionSejour.class
+com\mycompany\gestionsejour\GestionSejour$1.class
+com\mycompany\gestionsejour\modeles\Consommation.class
+com\mycompany\gestionsejour\modeles\Client.class
