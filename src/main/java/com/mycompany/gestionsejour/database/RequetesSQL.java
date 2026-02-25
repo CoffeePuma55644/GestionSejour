@@ -14,19 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contient toutes les requêtes SQL de l'application.
- * Chaque méthode gère sa propre connexion (ouvre et ferme).
- *
- * On utilise des "PreparedStatement" pour éviter les failles de sécurité SQL.
+ * Toutes les requêtes SQL au même endroit, c'est plus rangé.
+ * Chaque méthode ouvre et ferme sa connexion toute seule.
+ * PreparedStatement partout : pas de SQL injection chez nous.
  */
 public class RequetesSQL {
 
-    // =========================================================
-    //  CLIENT
-    // =========================================================
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //  les clients
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Ajoute un nouveau client dans la base de données.
+     * Envoie un nouveau client en BDD.
      */
     public static void ajouterClient(Client client) {
         String sql = "INSERT INTO client (nom_client, prenom_client, tel_client, adresse_client) VALUES (?, ?, ?, ?)";
@@ -52,7 +51,7 @@ public class RequetesSQL {
     }
 
     /**
-     * Retourne la liste de tous les clients enregistrés en base.
+     * Tous les clients d'un coup.
      */
     public static List<Client> listerClients() {
         List<Client> liste = new ArrayList<>();
@@ -63,7 +62,7 @@ public class RequetesSQL {
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
-            // On parcourt chaque ligne retournée par la requête
+            // On lit ligne par ligne ce que la BDD nous renvoie
             while (rs.next()) {
                 Client c = new Client(
                     rs.getInt("id_client"),
@@ -86,12 +85,12 @@ public class RequetesSQL {
         return liste;
     }
 
-    // =========================================================
-    //  CHAMBRE
-    // =========================================================
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //  les chambres
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Ajoute une nouvelle chambre dans la base de données.
+     * Envoie une nouvelle chambre en BDD.
      */
     public static void ajouterChambre(Chambre chambre) {
         String sql = "INSERT INTO chambre (num_chambre, type_chambre, prix_nuit, etat_chambre) VALUES (?, ?, ?, ?)";
@@ -117,7 +116,7 @@ public class RequetesSQL {
     }
 
     /**
-     * Retourne la liste de toutes les chambres.
+     * Toutes les chambres de l'hôtel.
      */
     public static List<Chambre> listerChambres() {
         List<Chambre> liste = new ArrayList<>();
@@ -149,12 +148,12 @@ public class RequetesSQL {
         return liste;
     }
 
-    // =========================================================
-    //  SERVICE
-    // =========================================================
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //  les services
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Ajoute un nouveau service dans la base de données.
+     * Envoie un nouveau service en BDD.
      */
     public static void ajouterService(Service service) {
         String sql = "INSERT INTO service (nom_service, categorie, prix_unitaire) VALUES (?, ?, ?)";
@@ -179,7 +178,7 @@ public class RequetesSQL {
     }
 
     /**
-     * Retourne la liste de tous les services.
+     * Tous les services disponibles.
      */
     public static List<Service> listerServices() {
         List<Service> liste = new ArrayList<>();
@@ -211,13 +210,13 @@ public class RequetesSQL {
         return liste;
     }
 
-    // =========================================================
-    //  SEJOUR
-    // =========================================================
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //  les séjours
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Ajoute un nouveau séjour dans la base de données.
-     * Le client et la chambre doivent déjà exister en BDD.
+     * Enregistre un séjour en BDD.
+     * Le client et la chambre doivent déjà exister.
      */
     public static void ajouterSejour(Sejour sejour) {
         String sql = "INSERT INTO sejour (date_arrivee, date_depart, nb_personnes, statut_paiement, id_client, num_chambre) VALUES (?, ?, ?, ?, ?, ?)";
@@ -245,8 +244,8 @@ public class RequetesSQL {
     }
 
     /**
-     * Retourne la liste de tous les séjours.
-     * Note : les objets Client et Chambre sont simplifiés (seulement l'id).
+     * Tous les séjours enregistrés.
+     * Attention : les objets Client/Chambre n'ont que l'id, pas toutes les infos.
      */
     public static List<Sejour> listerSejours() {
         List<Sejour> liste = new ArrayList<>();
@@ -258,7 +257,7 @@ public class RequetesSQL {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // On crée des objets Client et Chambre minimaux avec juste l'id
+                // Client et Chambre "vides", juste l'id pour faire le lien
                 Client client = new Client(rs.getInt("id_client"), "", "", "", "");
                 Chambre chambre = new Chambre(rs.getInt("num_chambre"), "", 0, "");
 
@@ -285,12 +284,12 @@ public class RequetesSQL {
         return liste;
     }
 
-    // =========================================================
-    //  CONSOMMATION
-    // =========================================================
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //  les consommations
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Enregistre une consommation de service pour un séjour donné.
+     * Enregistre ce qu'un client a consommé pendant son séjour.
      */
     public static void ajouterConsommation(Consommation conso) {
         String sql = "INSERT INTO consommer (id_sejour, id_service, quantite, date_conso) VALUES (?, ?, ?, ?)";

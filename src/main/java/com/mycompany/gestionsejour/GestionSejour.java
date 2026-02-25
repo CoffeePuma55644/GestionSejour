@@ -4,33 +4,32 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
- * Classe principale de l'application Gestion Séjour Hôtel.
- * C'est ici que le programme démarre.
+ * Le point de départ. Tout commence ici.
  */
 public class GestionSejour {
 
     public static void main(String[] args) {
 
-        // On lance l'interface graphique dans le bon thread (bonne pratique Swing)
+        // Swing veut qu'on lui parle dans son propre thread, on fait ça bien
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
-                // On crée la fenêtre principale
+                // La fenêtre principale, bienvenue
                 JFrame fenetre = new JFrame("Gestion Séjour Hôtel");
 
-                // Quand on ferme la fenêtre, le programme se termine
+                // Croix rouge = fin du programme
                 fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                // On définit la taille de la fenêtre
+                // 800x600, classique
                 fenetre.setSize(800, 600);
 
-                // On centre la fenêtre sur l'écran
+                // On centre, c'est plus propre
                 fenetre.setLocationRelativeTo(null);
 
-                // On ajoute le panneau Interface (géré par NetBeans) dans la fenêtre
+                // On branche l'interface générée par NetBeans
                 fenetre.add(new Interface());
 
-                // On rend la fenêtre visible
+                // Et on allume tout ça
                 fenetre.setVisible(true);
             }
         });

@@ -1,28 +1,27 @@
 package com.mycompany.gestionsejour.modeles;
 
 /**
- * Représente un service proposé par l'hôtel.
- * Exemples : petit-déjeuner, spa, room service, parking...
- * Correspond à la table SERVICE dans la base de données.
+ * Un service proposé par l'hôtel (petit-déj, spa, parking...).
+ * Table SERVICE en BDD.
  */
 public class Service {
 
-    // Identifiant unique du service (clé primaire)
+    // Son id en BDD
     private int idService;
 
-    // Nom du service (ex : "Petit-déjeuner", "Spa", "Parking"...)
+    // Le nom du service (Spa, Petit-déjeuner, Parking...)
     private String nomService;
 
-    // Catégorie du service (ex : "Restauration", "Bien-être", "Transport"...)
+    // Dans quelle catégorie il tombe
     private String categorie;
 
-    // Prix unitaire du service en euros
+    // Son prix à l'unité
     private double prixUnitaire;
 
     // --- Constructeur ---
 
     /**
-     * Crée un service avec toutes ses informations.
+     * Constructeur complet.
      */
     public Service(int idService, String nomService, String categorie, double prixUnitaire) {
         this.idService    = idService;
@@ -32,7 +31,7 @@ public class Service {
     }
 
     /**
-     * Constructeur sans id (utile avant l'enregistrement en BDD).
+     * Sans id : pour avant l'insertion en BDD.
      */
     public Service(String nomService, String categorie, double prixUnitaire) {
         this.nomService   = nomService;
@@ -40,7 +39,7 @@ public class Service {
         this.prixUnitaire = prixUnitaire;
     }
 
-    // --- Getters (lire les valeurs) ---
+    // --- Getters ---
 
     public int getIdService() {
         return idService;
@@ -58,7 +57,7 @@ public class Service {
         return prixUnitaire;
     }
 
-    // --- Setters (modifier les valeurs) ---
+    // --- Setters ---
 
     public void setIdService(int idService) {
         this.idService = idService;
@@ -79,7 +78,7 @@ public class Service {
     // --- Affichage ---
 
     /**
-     * Affiche les infos du service sous forme de texte (utile pour déboguer).
+     * Pour afficher ou déboguer.
      */
     public String toString() {
         return "Service #" + idService + " - " + nomService

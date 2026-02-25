@@ -1,28 +1,27 @@
 package com.mycompany.gestionsejour.modeles;
 
 /**
- * Représente une consommation de service pendant un séjour.
- * Exemple : un client a consommé 2 petits-déjeuners le 10 mars.
- * C'est la relation entre SEJOUR et SERVICE dans la base de données.
+ * Ce que le client a consommé pendant son séjour (spa, petits-déj, etc.).
+ * C'est la table de liaison entre SEJOUR et SERVICE.
  */
 public class Consommation {
 
-    // Le séjour pendant lequel le service a été consommé
+    // Le séjour concerné
     private Sejour sejour;
 
-    // Le service qui a été consommé
+    // Le service consommé
     private Service service;
 
-    // Quantité consommée (ex : 2 petits-déjeuners)
+    // Combien de fois (ex : 2 petits-déj)
     private int quantite;
 
-    // Date de la consommation (format texte : "YYYY-MM-DD")
+    // Le jour où c'est arrivé (YYYY-MM-DD)
     private String dateConso;
 
     // --- Constructeur ---
 
     /**
-     * Crée une consommation avec toutes ses informations.
+     * Tout en une fois.
      */
     public Consommation(Sejour sejour, Service service, int quantite, String dateConso) {
         this.sejour    = sejour;
@@ -31,7 +30,7 @@ public class Consommation {
         this.dateConso = dateConso;
     }
 
-    // --- Getters (lire les valeurs) ---
+    // --- Getters ---
 
     public Sejour getSejour() {
         return sejour;
@@ -49,7 +48,7 @@ public class Consommation {
         return dateConso;
     }
 
-    // --- Setters (modifier les valeurs) ---
+    // --- Setters ---
 
     public void setSejour(Sejour sejour) {
         this.sejour = sejour;
@@ -68,8 +67,7 @@ public class Consommation {
     }
 
     /**
-     * Calcule le montant total de cette consommation.
-     * Formule : quantité × prix unitaire du service.
+     * quantite × prix du service = le montant à payer pour cette conso.
      */
     public double getMontantTotal() {
         return quantite * service.getPrixUnitaire();
@@ -78,7 +76,7 @@ public class Consommation {
     // --- Affichage ---
 
     /**
-     * Affiche les infos de la consommation sous forme de texte (utile pour déboguer).
+     * Pour afficher ou déboguer.
      */
     public String toString() {
         return "Consommation du " + dateConso

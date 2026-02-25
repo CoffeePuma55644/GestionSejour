@@ -1,27 +1,27 @@
 package com.mycompany.gestionsejour.modeles;
 
 /**
- * Représente une chambre de l'hôtel.
- * Correspond à la table CHAMBRE dans la base de données.
+ * Une chambre. Elle a un numéro, un type, un prix et un état.
+ * Table CHAMBRE en BDD.
  */
 public class Chambre {
 
-    // Numéro de la chambre (clé primaire, ex : 101, 202...)
+    // Son numéro (genre 101, 202...)
     private int numChambre;
 
-    // Type de chambre (ex : "Simple", "Double", "Suite"...)
+    // Simple, Double, Suite... au choix
     private String typeChambre;
 
-    // Prix par nuit en euros
+    // Ce que ça coûte la nuit
     private double prixNuit;
 
-    // État de la chambre (ex : "Disponible", "Occupée", "En nettoyage"...)
+    // Disponible ? Occupée ? En nettoyage ?
     private String etatChambre;
 
     // --- Constructeur ---
 
     /**
-     * Crée une chambre avec toutes ses informations.
+     * Tout en un seul coup.
      */
     public Chambre(int numChambre, String typeChambre, double prixNuit, String etatChambre) {
         this.numChambre  = numChambre;
@@ -30,7 +30,7 @@ public class Chambre {
         this.etatChambre = etatChambre;
     }
 
-    // --- Getters (lire les valeurs) ---
+    // --- Getters ---
 
     public int getNumChambre() {
         return numChambre;
@@ -48,7 +48,7 @@ public class Chambre {
         return etatChambre;
     }
 
-    // --- Setters (modifier les valeurs) ---
+    // --- Setters ---
 
     public void setNumChambre(int numChambre) {
         this.numChambre = numChambre;
@@ -69,7 +69,7 @@ public class Chambre {
     // --- Affichage ---
 
     /**
-     * Affiche les infos de la chambre sous forme de texte (utile pour déboguer).
+     * Pour afficher ou déboguer.
      */
     public String toString() {
         return "Chambre #" + numChambre + " - " + typeChambre

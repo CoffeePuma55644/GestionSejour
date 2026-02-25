@@ -1,37 +1,36 @@
 package com.mycompany.gestionsejour.modeles;
 
 /**
- * Représente un séjour dans l'hôtel.
- * Un séjour est lié à UN client et à UNE chambre.
- * Correspond à la table SEJOUR dans la base de données.
+ * Un séjour : un client + une chambre + des dates.
+ * Table SEJOUR en BDD.
  */
 public class Sejour {
 
-    // Identifiant unique du séjour (clé primaire)
+    // Son id en BDD
     private int idSejour;
 
-    // Date d'arrivée du client (format texte : "YYYY-MM-DD")
+    // Quand le client arrive (YYYY-MM-DD)
     private String dateArrivee;
 
-    // Date de départ du client (format texte : "YYYY-MM-DD")
+    // Quand il se barre (YYYY-MM-DD)
     private String dateDepart;
 
-    // Nombre de personnes pour ce séjour
+    // Combien de personnes dans la chambre
     private int nbPersonnes;
 
-    // Statut du paiement (ex : "Payé", "En attente", "Annulé"...)
+    // Payé ? Pas encore ? Annulé ?
     private String statutPaiement;
 
-    // Le client qui a réservé ce séjour
+    // Le client qui a réservé
     private Client client;
 
-    // La chambre réservée pour ce séjour
+    // La chambre qu'il a prise
     private Chambre chambre;
 
     // --- Constructeur ---
 
     /**
-     * Crée un séjour avec toutes ses informations.
+     * Sejour complet, avec l'id.
      */
     public Sejour(int idSejour, String dateArrivee, String dateDepart,
                   int nbPersonnes, String statutPaiement,
@@ -46,7 +45,7 @@ public class Sejour {
     }
 
     /**
-     * Constructeur sans id (utile avant l'enregistrement en BDD).
+     * Sans id : pour avant l'insertion en BDD.
      */
     public Sejour(String dateArrivee, String dateDepart,
                   int nbPersonnes, String statutPaiement,
@@ -59,7 +58,7 @@ public class Sejour {
         this.chambre        = chambre;
     }
 
-    // --- Getters (lire les valeurs) ---
+    // --- Getters ---
 
     public int getIdSejour() {
         return idSejour;
@@ -89,7 +88,7 @@ public class Sejour {
         return chambre;
     }
 
-    // --- Setters (modifier les valeurs) ---
+    // --- Setters ---
 
     public void setIdSejour(int idSejour) {
         this.idSejour = idSejour;
@@ -122,7 +121,7 @@ public class Sejour {
     // --- Affichage ---
 
     /**
-     * Affiche les infos du séjour sous forme de texte (utile pour déboguer).
+     * Pour afficher ou déboguer.
      */
     public String toString() {
         return "Séjour #" + idSejour

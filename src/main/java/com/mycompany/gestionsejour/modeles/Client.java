@@ -1,30 +1,30 @@
 package com.mycompany.gestionsejour.modeles;
 
 /**
- * Représente un client de l'hôtel.
- * Correspond à la table CLIENT dans la base de données.
+ * Un client. Il vient, il dort, il paye, il repart.
+ * Table CLIENT en BDD.
  */
 public class Client {
 
-    // Identifiant unique du client (clé primaire)
+    // Son id en BDD
     private int idClient;
 
-    // Nom de famille du client
+    // Son nom de famille
     private String nomClient;
 
-    // Prénom du client
+    // Son prénom
     private String prenomClient;
 
-    // Numéro de téléphone du client
+    // Son numéro de tel
     private String telClient;
 
-    // Adresse postale du client
+    // Où il habite
     private String adresseClient;
 
     // --- Constructeur ---
 
     /**
-     * Crée un nouveau client avec toutes ses informations.
+     * Le grand constructeur, avec tout.
      */
     public Client(int idClient, String nomClient, String prenomClient, String telClient, String adresseClient) {
         this.idClient      = idClient;
@@ -35,7 +35,7 @@ public class Client {
     }
 
     /**
-     * Constructeur sans id (utile quand on crée un client avant de l'enregistrer en BDD).
+     * Sans id : pour quand le client n'est pas encore en BDD.
      */
     public Client(String nomClient, String prenomClient, String telClient, String adresseClient) {
         this.nomClient     = nomClient;
@@ -44,7 +44,7 @@ public class Client {
         this.adresseClient = adresseClient;
     }
 
-    // --- Getters (lire les valeurs) ---
+    // --- Getters ---
 
     public int getIdClient() {
         return idClient;
@@ -66,7 +66,7 @@ public class Client {
         return adresseClient;
     }
 
-    // --- Setters (modifier les valeurs) ---
+    // --- Setters ---
 
     public void setIdClient(int idClient) {
         this.idClient = idClient;
@@ -91,7 +91,7 @@ public class Client {
     // --- Affichage ---
 
     /**
-     * Affiche les infos du client sous forme de texte (utile pour déboguer).
+     * Pour afficher ou déboguer.
      */
     public String toString() {
         return "Client #" + idClient + " - " + prenomClient + " " + nomClient
