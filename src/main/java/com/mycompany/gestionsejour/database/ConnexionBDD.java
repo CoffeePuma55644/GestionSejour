@@ -5,40 +5,28 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Classe utilitaire pour se connecter à la base de données MySQL.
- *
- * IMPORTANT : avant d'utiliser l'application, il faut modifier les 3 lignes
- * ci-dessous avec tes propres informations de connexion MySQL.
+ * YEEEEEEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
  */
 public class ConnexionBDD {
 
-    // Adresse de la base de données (localhost = sur ton propre PC)
-    // "gestion_sejour" est le nom de la base à créer dans MySQL
-    private static final String URL      = "jdbc:mysql://localhost:3306/gestion_sejour";
+    // mmmh... mon pc slm...
+    private static final String URL      = "jdbc:mysql://localhost:3306/gestionsejourjava";
 
-    // Ton nom d'utilisateur MySQL (souvent "root" en local)
+    // C'est moi le maitre ici
     private static final String USER     = "root";
 
-    // Ton mot de passe MySQL (à remplacer par le tien)
-    private static final String PASSWORD = "motdepasse";
+    // Mon mot de passe
+    private static final String PASSWORD = "cpuma";
 
     /**
-     * Ouvre et retourne une connexion à la base de données.
-     *
-     * Exemple d'utilisation :
-     *   Connection conn = ConnexionBDD.getConnexion();
-     *
-     * Pense à fermer la connexion après utilisation :
-     *   conn.close();
+     * Ouvre et ferme la porte de mySQL
      */
     public static Connection getConnexion() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
     /**
-     * Teste si la connexion à la base de données fonctionne.
-     * Affiche un message dans la console selon le résultat.
-     * Utile pour vérifier que tout est bien configuré.
+     * Test  1  2 ICI LA TERRE CAMILLE
      */
     public static void testerConnexion() {
         try {
