@@ -114,7 +114,7 @@
             </Constraint>
           </Constraints>
           <Properties>
-            <Property name="text" type="java.lang.String" value="Prix/nuit (€) :"/>
+            <Property name="text" type="java.lang.String" value="Prix/nuit ($) :"/>
             <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="1"/></Property>
           </Properties>
         </Component>
@@ -252,7 +252,7 @@
               <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Numéro" type="java.lang.Object"/>
                 <Column editable="false" title="Type" type="java.lang.Object"/>
-                <Column editable="false" title="Prix/nuit (€)" type="java.lang.Object"/>
+                <Column editable="false" title="Prix/nuit ($)" type="java.lang.Object"/>
                 <Column editable="false" title="État" type="java.lang.Object"/>
               </Table>
             </Property>

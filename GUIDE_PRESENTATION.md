@@ -884,14 +884,3 @@ Pour ceux qui veulent briller a l'oral, voici les concepts techniques utilises :
 | **Singleton statique** | `ConnexionBDD`, `RequetesSQL` | Toutes les methodes sont `static` : on les appelle directement, pas besoin de creer un objet. |
 
 ---
-
-# Bonus — Les limites et ameliorations possibles
-
-A mentionner si un prof pose la question "Qu'est-ce que vous amelioreriez ?" :
-
-1. **Pas de modification ni suppression** — On ne peut qu'ajouter et lister. Ajouter des UPDATE et DELETE serait la priorite.
-2. **Pas d'affichage des consommations** — On peut les enregistrer mais pas les voir.
-3. **Les objets fantomes dans `listerSejours()`** — Idealement, on ferait un `JOIN` SQL pour afficher le nom du client et le type de chambre au lieu de juste l'ID.
-4. **Pas de validation des dates** — On pourrait verifier que la date d'arrivee est avant la date de depart.
-5. **Connexion sans pool** — Chaque requete ouvre et ferme une connexion. Un pool de connexions serait plus performant.
-6. **Credentials en dur dans le code** — En production, on utiliserait des variables d'environnement.

@@ -23,10 +23,15 @@ public class Consommation {
     /**
      * Tout en une fois.
      */
-    public Consommation(Sejour sejour, Service service, int quantite, String dateConso) {
-        this.sejour    = sejour;
-        this.service   = service;
-        this.quantite  = quantite;
+    public Consommation(
+        Sejour sejour,
+        Service service,
+        int quantite,
+        String dateConso
+    ) {
+        this.sejour = sejour;
+        this.service = service;
+        this.quantite = quantite;
         this.dateConso = dateConso;
     }
 
@@ -79,10 +84,18 @@ public class Consommation {
      * Pour afficher ou déboguer.
      */
     public String toString() {
-        return "Consommation du " + dateConso
-                + " | Service : " + (service != null ? service.getNomService() : "?")
-                + " | Quantité : " + quantite
-                + " | Total : " + getMontantTotal() + "€"
-                + " | Séjour #" + (sejour != null ? sejour.getIdSejour() : "?");
+        return (
+            "Consommation du " +
+            dateConso +
+            " | Service : " +
+            (service != null ? service.getNomService() : "?") +
+            " | Quantité : " +
+            quantite +
+            " | Total : " +
+            getMontantTotal() +
+            "$" +
+            " | Séjour #" +
+            (sejour != null ? sejour.getIdSejour() : "?")
+        );
     }
 }
