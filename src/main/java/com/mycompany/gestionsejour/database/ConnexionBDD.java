@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class ConnexionBDD {
 
     // mmmh... mon pc slm...
-    private static final String URL      = "jdbc:mysql://localhost:3306/gestionsejourjava";
+    private static final String URL      = "jdbc:mysql://localhost:3306/gestionsejourjava?connectTimeout=3000&socketTimeout=5000";
 
     // C'est moi le maitre ici
     private static final String USER     = "root";

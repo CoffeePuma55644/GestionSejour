@@ -22,6 +22,13 @@ public class MainGUI extends javax.swing.JPanel {
      */
     public MainGUI() {
         initComponents();
+
+        // On ajoute les 4 sous-panels dans le CardLayout
+        panelContenu.add(new ClientsGUI(),  CARTE_CLIENTS);
+        panelContenu.add(new ChambresGUI(), CARTE_CHAMBRES);
+        panelContenu.add(new SejoursGUI(),  CARTE_SEJOURS);
+        panelContenu.add(new ServicesGUI(), CARTE_SERVICES);
+
         configurerCardLayout();
         // Clients est affiché en premier, logique
         afficherCarte(CARTE_CLIENTS);
@@ -72,36 +79,34 @@ public class MainGUI extends javax.swing.JPanel {
         btnServices = new javax.swing.JButton();
         labelSpacer = new javax.swing.JLabel();
         panelContenu = new javax.swing.JPanel();
-        panelClients = new com.mycompany.gestionsejour.gui.ClientsGUI();
-        panelChambres = new com.mycompany.gestionsejour.gui.ChambresGUI();
-        panelSejours = new com.mycompany.gestionsejour.gui.SejoursGUI();
-        panelServices = new com.mycompany.gestionsejour.gui.ServicesGUI();
 
         setLayout(new java.awt.BorderLayout());
 
-        // --- Header ---
-        panelHeader.setBackground(new java.awt.Color(30, 64, 175));
-        panelHeader.setPreferredSize(new java.awt.Dimension(0, 60));
+        // --- Header bleu foncé ---
+        panelHeader.setBackground(new java.awt.Color(30, 58, 138));
+        panelHeader.setPreferredSize(new java.awt.Dimension(0, 50));
         panelHeader.setLayout(new java.awt.BorderLayout());
 
         labelTitre.setText("  Hotel Manager");
-        labelTitre.setForeground(new java.awt.Color(219, 234, 254));
         labelTitre.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 20));
+        labelTitre.setForeground(new java.awt.Color(255, 255, 255));
         panelHeader.add(labelTitre, java.awt.BorderLayout.CENTER);
 
         add(panelHeader, java.awt.BorderLayout.NORTH);
 
-        // --- Sidebar ---
+        // --- Sidebar bleu foncé ---
         panelSidebar.setBackground(new java.awt.Color(30, 58, 138));
         panelSidebar.setPreferredSize(new java.awt.Dimension(180, 0));
         panelSidebar.setLayout(new java.awt.GridBagLayout());
 
         btnClients.setText("Clients");
-        btnClients.setBackground(new java.awt.Color(59, 130, 246));
+        btnClients.setBackground(new java.awt.Color(29, 78, 216));
         btnClients.setForeground(new java.awt.Color(255, 255, 255));
         btnClients.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
-        btnClients.setFocusPainted(false);
         btnClients.setBorderPainted(false);
+        btnClients.setFocusPainted(false);
+        btnClients.setContentAreaFilled(false);
+        btnClients.setOpaque(true);
         btnClients.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnClients.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +117,7 @@ public class MainGUI extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 5, 10);
         panelSidebar.add(btnClients, gridBagConstraints);
@@ -120,8 +126,10 @@ public class MainGUI extends javax.swing.JPanel {
         btnChambres.setBackground(new java.awt.Color(29, 78, 216));
         btnChambres.setForeground(new java.awt.Color(255, 255, 255));
         btnChambres.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
-        btnChambres.setFocusPainted(false);
         btnChambres.setBorderPainted(false);
+        btnChambres.setFocusPainted(false);
+        btnChambres.setContentAreaFilled(false);
+        btnChambres.setOpaque(true);
         btnChambres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnChambres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,6 +140,7 @@ public class MainGUI extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
         panelSidebar.add(btnChambres, gridBagConstraints);
@@ -140,8 +149,10 @@ public class MainGUI extends javax.swing.JPanel {
         btnSejours.setBackground(new java.awt.Color(29, 78, 216));
         btnSejours.setForeground(new java.awt.Color(255, 255, 255));
         btnSejours.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
-        btnSejours.setFocusPainted(false);
         btnSejours.setBorderPainted(false);
+        btnSejours.setFocusPainted(false);
+        btnSejours.setContentAreaFilled(false);
+        btnSejours.setOpaque(true);
         btnSejours.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSejours.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,6 +163,7 @@ public class MainGUI extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
         panelSidebar.add(btnSejours, gridBagConstraints);
@@ -160,8 +172,10 @@ public class MainGUI extends javax.swing.JPanel {
         btnServices.setBackground(new java.awt.Color(29, 78, 216));
         btnServices.setForeground(new java.awt.Color(255, 255, 255));
         btnServices.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
-        btnServices.setFocusPainted(false);
         btnServices.setBorderPainted(false);
+        btnServices.setFocusPainted(false);
+        btnServices.setContentAreaFilled(false);
+        btnServices.setOpaque(true);
         btnServices.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnServices.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,30 +186,22 @@ public class MainGUI extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
         panelSidebar.add(btnServices, gridBagConstraints);
-
-        labelSpacer.setText("");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         panelSidebar.add(labelSpacer, gridBagConstraints);
 
         add(panelSidebar, java.awt.BorderLayout.WEST);
 
-        // --- Zone contenu avec CardLayout ---
-        panelContenu.setBackground(new java.awt.Color(241, 245, 249));
         panelContenu.setLayout(new java.awt.CardLayout());
-
-        panelContenu.add(panelClients, "clients");
-        panelContenu.add(panelChambres, "chambres");
-        panelContenu.add(panelSejours, "sejours");
-        panelContenu.add(panelServices, "services");
-
         add(panelContenu, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -226,12 +232,8 @@ public class MainGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnServices;
     private javax.swing.JLabel labelSpacer;
     private javax.swing.JLabel labelTitre;
-    private com.mycompany.gestionsejour.gui.ChambresGUI panelChambres;
-    private com.mycompany.gestionsejour.gui.ClientsGUI panelClients;
     private javax.swing.JPanel panelContenu;
     private javax.swing.JPanel panelHeader;
-    private com.mycompany.gestionsejour.gui.SejoursGUI panelSejours;
-    private com.mycompany.gestionsejour.gui.ServicesGUI panelServices;
     private javax.swing.JPanel panelSidebar;
     // End of variables declaration//GEN-END:variables
 }
