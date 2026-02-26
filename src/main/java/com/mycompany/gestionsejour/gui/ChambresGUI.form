@@ -114,7 +114,7 @@
             </Constraint>
           </Constraints>
           <Properties>
-            <Property name="text" type="java.lang.String" value="Prix/nuit (€) :"/>
+            <Property name="text" type="java.lang.String" value="Prix/nuit ($) :"/>
             <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="1"/></Property>
           </Properties>
         </Component>
@@ -233,6 +233,48 @@
                           parameters="java.awt.event.ActionEvent" handler="btnRafraichirChambresActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="btnModifierChambre">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Modifier la chambre"/>
+            <Property name="background" type="java.awt.Color">
+              <Color red="234" green="88" blue="12" type="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color">
+              <Color red="255" green="255" blue="255" type="1"/>
+            </Property>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="0"/></Property>
+            <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="cursor" type="java.awt.Cursor"><Cursor type="12"/></Property>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener"
+                          parameters="java.awt.event.ActionEvent" handler="btnModifierChambreActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSupprimerChambre">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Supprimer"/>
+            <Property name="background" type="java.awt.Color">
+              <Color red="185" green="28" blue="28" type="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color">
+              <Color red="255" green="255" blue="255" type="1"/>
+            </Property>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="0"/></Property>
+            <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="cursor" type="java.awt.Cursor"><Cursor type="12"/></Property>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener"
+                          parameters="java.awt.event.ActionEvent" handler="btnSupprimerChambreActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
 
@@ -252,7 +294,7 @@
               <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Numéro" type="java.lang.Object"/>
                 <Column editable="false" title="Type" type="java.lang.Object"/>
-                <Column editable="false" title="Prix/nuit (€)" type="java.lang.Object"/>
+                <Column editable="false" title="Prix/nuit ($)" type="java.lang.Object"/>
                 <Column editable="false" title="État" type="java.lang.Object"/>
               </Table>
             </Property>

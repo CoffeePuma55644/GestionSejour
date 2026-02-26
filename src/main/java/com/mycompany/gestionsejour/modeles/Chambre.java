@@ -23,10 +23,15 @@ public class Chambre {
     /**
      * Tout en un seul coup.
      */
-    public Chambre(int numChambre, String typeChambre, double prixNuit, String etatChambre) {
-        this.numChambre  = numChambre;
+    public Chambre(
+        int numChambre,
+        String typeChambre,
+        double prixNuit,
+        String etatChambre
+    ) {
+        this.numChambre = numChambre;
         this.typeChambre = typeChambre;
-        this.prixNuit    = prixNuit;
+        this.prixNuit = prixNuit;
         this.etatChambre = etatChambre;
     }
 
@@ -72,7 +77,15 @@ public class Chambre {
      * Pour afficher ou déboguer.
      */
     public String toString() {
-        return "Chambre #" + numChambre + " - " + typeChambre
-                + " | Prix/nuit : " + prixNuit + "€ | État : " + etatChambre;
+        return (
+            "Chambre #" +
+            numChambre +
+            " - " +
+            typeChambre +
+            " | Prix/nuit : " +
+            prixNuit +
+            "$ | État : " +
+            etatChambre
+        );
     }
 }

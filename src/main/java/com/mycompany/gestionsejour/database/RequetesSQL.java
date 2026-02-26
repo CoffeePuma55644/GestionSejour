@@ -85,6 +85,56 @@ public class RequetesSQL {
         return liste;
     }
 
+    /**
+     * Met à jour un client existant en BDD.
+     */
+    public static void modifierClient(Client client) {
+        String sql = "UPDATE client SET nom_client = ?, prenom_client = ?, tel_client = ?, adresse_client = ? WHERE id_client = ?";
+
+        try {
+            Connection conn = ConnexionBDD.getConnexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, client.getNomClient());
+            stmt.setString(2, client.getPrenomClient());
+            stmt.setString(3, client.getTelClient());
+            stmt.setString(4, client.getAdresseClient());
+            stmt.setInt(5, client.getIdClient());
+
+            stmt.executeUpdate();
+            System.out.println("Client modifié : #" + client.getIdClient());
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la modification du client : " + e.getMessage());
+        }
+    }
+
+    /**
+     * Supprime un client de la BDD par son id.
+     */
+    public static void supprimerClient(int idClient) {
+        String sql = "DELETE FROM client WHERE id_client = ?";
+
+        try {
+            Connection conn = ConnexionBDD.getConnexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idClient);
+
+            stmt.executeUpdate();
+            System.out.println("Client supprimé : #" + idClient);
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du client : " + e.getMessage());
+        }
+    }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //  les chambres
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,6 +198,55 @@ public class RequetesSQL {
         return liste;
     }
 
+    /**
+     * Met à jour une chambre existante en BDD.
+     */
+    public static void modifierChambre(Chambre chambre) {
+        String sql = "UPDATE chambre SET type_chambre = ?, prix_nuit = ?, etat_chambre = ? WHERE num_chambre = ?";
+
+        try {
+            Connection conn = ConnexionBDD.getConnexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, chambre.getTypeChambre());
+            stmt.setDouble(2, chambre.getPrixNuit());
+            stmt.setString(3, chambre.getEtatChambre());
+            stmt.setInt(4, chambre.getNumChambre());
+
+            stmt.executeUpdate();
+            System.out.println("Chambre modifiée : #" + chambre.getNumChambre());
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la modification de la chambre : " + e.getMessage());
+        }
+    }
+
+    /**
+     * Supprime une chambre de la BDD par son numéro.
+     */
+    public static void supprimerChambre(int numChambre) {
+        String sql = "DELETE FROM chambre WHERE num_chambre = ?";
+
+        try {
+            Connection conn = ConnexionBDD.getConnexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, numChambre);
+
+            stmt.executeUpdate();
+            System.out.println("Chambre supprimée : #" + numChambre);
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression de la chambre : " + e.getMessage());
+        }
+    }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //  les services
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -208,6 +307,55 @@ public class RequetesSQL {
         }
 
         return liste;
+    }
+
+    /**
+     * Met à jour un service existant en BDD.
+     */
+    public static void modifierService(Service service) {
+        String sql = "UPDATE service SET nom_service = ?, categorie = ?, prix_unitaire = ? WHERE id_service = ?";
+
+        try {
+            Connection conn = ConnexionBDD.getConnexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, service.getNomService());
+            stmt.setString(2, service.getCategorie());
+            stmt.setDouble(3, service.getPrixUnitaire());
+            stmt.setInt(4, service.getIdService());
+
+            stmt.executeUpdate();
+            System.out.println("Service modifié : #" + service.getIdService());
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la modification du service : " + e.getMessage());
+        }
+    }
+
+    /**
+     * Supprime un service de la BDD par son id.
+     */
+    public static void supprimerService(int idService) {
+        String sql = "DELETE FROM service WHERE id_service = ?";
+
+        try {
+            Connection conn = ConnexionBDD.getConnexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idService);
+
+            stmt.executeUpdate();
+            System.out.println("Service supprimé : #" + idService);
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du service : " + e.getMessage());
+        }
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -282,6 +430,58 @@ public class RequetesSQL {
         }
 
         return liste;
+    }
+
+    /**
+     * Met à jour un séjour existant en BDD.
+     */
+    public static void modifierSejour(Sejour sejour) {
+        String sql = "UPDATE sejour SET date_arrivee = ?, date_depart = ?, nb_personnes = ?, statut_paiement = ?, id_client = ?, num_chambre = ? WHERE id_sejour = ?";
+
+        try {
+            Connection conn = ConnexionBDD.getConnexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setDate(1, java.sql.Date.valueOf(sejour.getDateArrivee()));
+            stmt.setDate(2, java.sql.Date.valueOf(sejour.getDateDepart()));
+            stmt.setInt(3, sejour.getNbPersonnes());
+            stmt.setString(4, sejour.getStatutPaiement());
+            stmt.setInt(5, sejour.getClient().getIdClient());
+            stmt.setInt(6, sejour.getChambre().getNumChambre());
+            stmt.setInt(7, sejour.getIdSejour());
+
+            stmt.executeUpdate();
+            System.out.println("Séjour modifié : #" + sejour.getIdSejour());
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la modification du séjour : " + e.getMessage());
+        }
+    }
+
+    /**
+     * Supprime un séjour de la BDD par son id.
+     */
+    public static void supprimerSejour(int idSejour) {
+        String sql = "DELETE FROM sejour WHERE id_sejour = ?";
+
+        try {
+            Connection conn = ConnexionBDD.getConnexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idSejour);
+
+            stmt.executeUpdate();
+            System.out.println("Séjour supprimé : #" + idSejour);
+
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du séjour : " + e.getMessage());
+        }
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -16,6 +16,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SejoursGUI extends javax.swing.JPanel {
 
+    /** ID du séjour sélectionné pour modification. -1 = aucun. */
+    private int idSejourEnEdition = -1;
+
     /**
      * Construction et chargement immédiat des séjours.
      */
@@ -24,6 +27,7 @@ public class SejoursGUI extends javax.swing.JPanel {
         try {
             styleTableHeader();
             chargerSejours();
+            configurerSelectionTable();
         } catch (Exception e) {
             System.out.println("SejoursGUI : chargement initial échoué – " + e.getMessage());
         }
@@ -35,6 +39,31 @@ public class SejoursGUI extends javax.swing.JPanel {
     private void styleTableHeader() {
         tableSejours.getTableHeader().setBackground(new java.awt.Color(191, 219, 254));
         tableSejours.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+    }
+
+    /**
+     * Quand on clique sur une ligne, on pré-remplit le formulaire séjour pour édition.
+     */
+    private void configurerSelectionTable() {
+        tableSejours.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = tableSejours.getSelectedRow();
+                if (row >= 0) {
+                    DefaultTableModel model = (DefaultTableModel) tableSejours.getModel();
+                    idSejourEnEdition = (int) model.getValueAt(row, 0);
+                    fieldIdClientSejour.setText(String.valueOf(model.getValueAt(row, 1)));
+                    fieldNumChambreSejour.setText(String.valueOf(model.getValueAt(row, 2)));
+                    fieldDateArrivee.setText(String.valueOf(model.getValueAt(row, 3)));
+                    fieldDateDepart.setText(String.valueOf(model.getValueAt(row, 4)));
+                    fieldNbPersonnes.setText(String.valueOf(model.getValueAt(row, 5)));
+                    comboStatutPaiement.setSelectedItem(model.getValueAt(row, 6));
+                    panelFormSejour.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                        "Modifier le séjour #" + idSejourEnEdition));
+                    btnModifierSejour.setEnabled(true);
+                    btnSupprimerSejour.setEnabled(true);
+                }
+            }
+        });
     }
 
     /**
@@ -59,7 +88,7 @@ public class SejoursGUI extends javax.swing.JPanel {
     }
 
     /**
-     * Vide le formulaire séjour après ajout.
+     * Vide le formulaire séjour et repasse en mode "Ajouter".
      */
     private void viderFormulaireSejour() {
         fieldIdClientSejour.setText("");
@@ -68,6 +97,11 @@ public class SejoursGUI extends javax.swing.JPanel {
         fieldDateDepart.setText("");
         fieldNbPersonnes.setText("");
         comboStatutPaiement.setSelectedIndex(0);
+        idSejourEnEdition = -1;
+        tableSejours.clearSelection();
+        panelFormSejour.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajouter un séjour"));
+        btnModifierSejour.setEnabled(false);
+        btnSupprimerSejour.setEnabled(false);
     }
 
     /**
@@ -112,6 +146,8 @@ public class SejoursGUI extends javax.swing.JPanel {
         btnAjouterConso = new javax.swing.JButton();
         panelSudSejour = new javax.swing.JPanel();
         btnRafraichirSejours = new javax.swing.JButton();
+        btnModifierSejour = new javax.swing.JButton();
+        btnSupprimerSejour = new javax.swing.JButton();
         scrollSejours = new javax.swing.JScrollPane();
         tableSejours = new javax.swing.JTable();
 
@@ -358,6 +394,38 @@ public class SejoursGUI extends javax.swing.JPanel {
         });
         panelSudSejour.add(btnRafraichirSejours);
 
+        btnModifierSejour.setText("Modifier le séjour");
+        btnModifierSejour.setBackground(new java.awt.Color(234, 88, 12));
+        btnModifierSejour.setForeground(new java.awt.Color(255, 255, 255));
+        btnModifierSejour.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12));
+        btnModifierSejour.setFocusPainted(false);
+        btnModifierSejour.setContentAreaFilled(false);
+        btnModifierSejour.setOpaque(true);
+        btnModifierSejour.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModifierSejour.setEnabled(false);
+        btnModifierSejour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifierSejourActionPerformed(evt);
+            }
+        });
+        panelSudSejour.add(btnModifierSejour);
+
+        btnSupprimerSejour.setText("Supprimer");
+        btnSupprimerSejour.setBackground(new java.awt.Color(185, 28, 28));
+        btnSupprimerSejour.setForeground(new java.awt.Color(255, 255, 255));
+        btnSupprimerSejour.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12));
+        btnSupprimerSejour.setFocusPainted(false);
+        btnSupprimerSejour.setContentAreaFilled(false);
+        btnSupprimerSejour.setOpaque(true);
+        btnSupprimerSejour.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSupprimerSejour.setEnabled(false);
+        btnSupprimerSejour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSupprimerSejourActionPerformed(evt);
+            }
+        });
+        panelSudSejour.add(btnSupprimerSejour);
+
         add(panelSudSejour, java.awt.BorderLayout.SOUTH);
 
         // --- Tableau ---
@@ -449,13 +517,67 @@ public class SejoursGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAjouterConsoActionPerformed
 
     private void btnRafraichirSejoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRafraichirSejoursActionPerformed
+        viderFormulaireSejour();
         chargerSejours();
     }//GEN-LAST:event_btnRafraichirSejoursActionPerformed
+
+    private void btnModifierSejourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifierSejourActionPerformed
+        if (idSejourEnEdition < 0) return;
+
+        String idClientStr   = fieldIdClientSejour.getText().trim();
+        String numChambreStr = fieldNumChambreSejour.getText().trim();
+        String arrivee       = fieldDateArrivee.getText().trim();
+        String depart        = fieldDateDepart.getText().trim();
+        String nbPersStr     = fieldNbPersonnes.getText().trim();
+        String statut        = (String) comboStatutPaiement.getSelectedItem();
+
+        if (idClientStr.isEmpty() || numChambreStr.isEmpty() || arrivee.isEmpty() || depart.isEmpty() || nbPersStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Tous les champs sont obligatoires.",
+                "Champs manquants", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int idClient    = Integer.parseInt(idClientStr);
+            int numChambre  = Integer.parseInt(numChambreStr);
+            int nbPersonnes = Integer.parseInt(nbPersStr);
+
+            Client client   = new Client(idClient, "", "", "", "");
+            Chambre chambre = new Chambre(numChambre, "", 0, "");
+            Sejour sejour   = new Sejour(idSejourEnEdition, arrivee, depart, nbPersonnes, statut, client, chambre);
+            RequetesSQL.modifierSejour(sejour);
+            viderFormulaireSejour();
+            chargerSejours();
+
+        } catch (NumberFormatException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "L'ID client, le N° chambre et le nb de personnes doivent être des entiers.",
+                "Format invalide", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnModifierSejourActionPerformed
+
+    private void btnSupprimerSejourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupprimerSejourActionPerformed
+        if (idSejourEnEdition < 0) return;
+
+        int confirmation = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Supprimer le séjour #" + idSejourEnEdition + " ?",
+            "Confirmation", javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+
+        if (confirmation == javax.swing.JOptionPane.YES_OPTION) {
+            RequetesSQL.supprimerSejour(idSejourEnEdition);
+            viderFormulaireSejour();
+            chargerSejours();
+        }
+    }//GEN-LAST:event_btnSupprimerSejourActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAjouterConso;
     private javax.swing.JButton btnAjouterSejour;
+    private javax.swing.JButton btnModifierSejour;
     private javax.swing.JButton btnRafraichirSejours;
+    private javax.swing.JButton btnSupprimerSejour;
     private javax.swing.JComboBox<String> comboStatutPaiement;
     private javax.swing.JTextField fieldDateArrivee;
     private javax.swing.JTextField fieldDateConso;

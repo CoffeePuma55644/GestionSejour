@@ -2,7 +2,6 @@ package com.mycompany.gestionsejour.gui;
 
 import com.mycompany.gestionsejour.database.RequetesSQL;
 import com.mycompany.gestionsejour.modeles.Chambre;
-
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,6 +11,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ChambresGUI extends javax.swing.JPanel {
 
+    /** Numéro de la chambre sélectionnée pour modification. -1 = aucune. */
+    private int numChambreEnEdition = -1;
+
     /**
      * Construction et chargement immédiat.
      */
@@ -20,8 +22,11 @@ public class ChambresGUI extends javax.swing.JPanel {
         try {
             styleTableHeader();
             chargerChambres();
+            configurerSelectionTable();
         } catch (Exception e) {
-            System.out.println("ChambresGUI : chargement initial échoué – " + e.getMessage());
+            System.out.println(
+                "ChambresGUI : chargement initial échoué – " + e.getMessage()
+            );
         }
     }
 
@@ -29,8 +34,38 @@ public class ChambresGUI extends javax.swing.JPanel {
      * En-têtes bleu-200 pour le tableau.
      */
     private void styleTableHeader() {
-        tableChambres.getTableHeader().setBackground(new java.awt.Color(191, 219, 254));
-        tableChambres.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+        tableChambres
+            .getTableHeader()
+            .setBackground(new java.awt.Color(191, 219, 254));
+        tableChambres
+            .getTableHeader()
+            .setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+    }
+
+    /**
+     * Quand on clique sur une ligne, on pré-remplit le formulaire pour édition.
+     */
+    private void configurerSelectionTable() {
+        tableChambres.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = tableChambres.getSelectedRow();
+                if (row >= 0) {
+                    DefaultTableModel model = (DefaultTableModel) tableChambres.getModel();
+                    numChambreEnEdition = (int) model.getValueAt(row, 0);
+                    fieldNumChambre.setText(String.valueOf(numChambreEnEdition));
+                    fieldNumChambre.setEditable(false);
+                    String type = (String) model.getValueAt(row, 1);
+                    comboChambreType.setSelectedItem(type);
+                    fieldPrixNuit.setText(String.valueOf(model.getValueAt(row, 2)));
+                    String etat = (String) model.getValueAt(row, 3);
+                    comboChambreEtat.setSelectedItem(etat);
+                    panelFormChambre.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                        "Modifier la chambre #" + numChambreEnEdition));
+                    btnModifierChambre.setEnabled(true);
+                    btnSupprimerChambre.setEnabled(true);
+                }
+            }
+        });
     }
 
     /**
@@ -42,12 +77,14 @@ public class ChambresGUI extends javax.swing.JPanel {
 
         List<Chambre> chambres = RequetesSQL.listerChambres();
         for (Chambre c : chambres) {
-            model.addRow(new Object[]{
-                c.getNumChambre(),
-                c.getTypeChambre(),
-                c.getPrixNuit(),
-                c.getEtatChambre()
-            });
+            model.addRow(
+                new Object[] {
+                    c.getNumChambre(),
+                    c.getTypeChambre(),
+                    c.getPrixNuit(),
+                    c.getEtatChambre(),
+                }
+            );
         }
     }
 
@@ -56,9 +93,15 @@ public class ChambresGUI extends javax.swing.JPanel {
      */
     private void viderFormulaire() {
         fieldNumChambre.setText("");
+        fieldNumChambre.setEditable(true);
         fieldPrixNuit.setText("");
         comboChambreType.setSelectedIndex(0);
         comboChambreEtat.setSelectedIndex(0);
+        numChambreEnEdition = -1;
+        tableChambres.clearSelection();
+        panelFormChambre.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajouter une chambre"));
+        btnModifierChambre.setEnabled(false);
+        btnSupprimerChambre.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -78,6 +121,8 @@ public class ChambresGUI extends javax.swing.JPanel {
         btnAjouterChambre = new javax.swing.JButton();
         panelSudChambre = new javax.swing.JPanel();
         btnRafraichirChambres = new javax.swing.JButton();
+        btnModifierChambre = new javax.swing.JButton();
+        btnSupprimerChambre = new javax.swing.JButton();
         scrollChambres = new javax.swing.JScrollPane();
         tableChambres = new javax.swing.JTable();
 
@@ -85,67 +130,93 @@ public class ChambresGUI extends javax.swing.JPanel {
 
         // --- Formulaire haut ---
         panelFormChambre.setBackground(new java.awt.Color(241, 245, 249));
-        panelFormChambre.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajouter une chambre"));
+        panelFormChambre.setBorder(
+            javax.swing.BorderFactory.createTitledBorder("Ajouter une chambre")
+        );
         panelFormChambre.setPreferredSize(new java.awt.Dimension(0, 170));
         panelFormChambre.setLayout(new java.awt.GridBagLayout());
 
         labelNumChambre.setText("Numéro :");
-        labelNumChambre.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+        labelNumChambre.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12)
+        );
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(12, 15, 5, 5);
         panelFormChambre.add(labelNumChambre, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1; gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(12, 5, 5, 15);
         panelFormChambre.add(fieldNumChambre, gridBagConstraints);
 
         labelTypeChambre.setText("Type :");
-        labelTypeChambre.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+        labelTypeChambre.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12)
+        );
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2; gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(12, 15, 5, 5);
         panelFormChambre.add(labelTypeChambre, gridBagConstraints);
 
-        comboChambreType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Simple", "Double", "Suite"}));
+        comboChambreType.setModel(
+            new javax.swing.DefaultComboBoxModel<>(
+                new String[] { "Simple", "Double", "Suite" }
+            )
+        );
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3; gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(12, 5, 5, 15);
         panelFormChambre.add(comboChambreType, gridBagConstraints);
 
-        labelPrixNuit.setText("Prix/nuit (€) :");
-        labelPrixNuit.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+        labelPrixNuit.setText("Prix/nuit ($) :");
+        labelPrixNuit.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12)
+        );
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 5);
         panelFormChambre.add(labelPrixNuit, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1; gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 15);
         panelFormChambre.add(fieldPrixNuit, gridBagConstraints);
 
         labelEtatChambre.setText("État :");
-        labelEtatChambre.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+        labelEtatChambre.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12)
+        );
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2; gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 5);
         panelFormChambre.add(labelEtatChambre, gridBagConstraints);
 
-        comboChambreEtat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Disponible", "Occupée", "En nettoyage"}));
+        comboChambreEtat.setModel(
+            new javax.swing.DefaultComboBoxModel<>(
+                new String[] { "Disponible", "Occupée", "En nettoyage" }
+            )
+        );
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3; gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 15);
@@ -154,18 +225,25 @@ public class ChambresGUI extends javax.swing.JPanel {
         btnAjouterChambre.setText("Ajouter la chambre");
         btnAjouterChambre.setBackground(new java.awt.Color(37, 99, 235));
         btnAjouterChambre.setForeground(new java.awt.Color(255, 255, 255));
-        btnAjouterChambre.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
+        btnAjouterChambre.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13)
+        );
         btnAjouterChambre.setFocusPainted(false);
         btnAjouterChambre.setContentAreaFilled(false);
         btnAjouterChambre.setOpaque(true);
-        btnAjouterChambre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAjouterChambre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAjouterChambreActionPerformed(evt);
+        btnAjouterChambre.setCursor(
+            new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+        );
+        btnAjouterChambre.addActionListener(
+            new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnAjouterChambreActionPerformed(evt);
+                }
             }
-        });
+        );
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.CENTER;
         gridBagConstraints.insets = new java.awt.Insets(12, 15, 12, 15);
@@ -175,33 +253,91 @@ public class ChambresGUI extends javax.swing.JPanel {
 
         // --- Barre bas ---
         panelSudChambre.setBackground(new java.awt.Color(241, 245, 249));
-        panelSudChambre.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        panelSudChambre.setLayout(
+            new java.awt.FlowLayout(java.awt.FlowLayout.LEFT)
+        );
 
         btnRafraichirChambres.setText("Rafraîchir la liste");
         btnRafraichirChambres.setBackground(new java.awt.Color(30, 58, 138));
         btnRafraichirChambres.setForeground(new java.awt.Color(255, 255, 255));
-        btnRafraichirChambres.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12));
+        btnRafraichirChambres.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12)
+        );
         btnRafraichirChambres.setFocusPainted(false);
         btnRafraichirChambres.setContentAreaFilled(false);
         btnRafraichirChambres.setOpaque(true);
-        btnRafraichirChambres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnRafraichirChambres.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRafraichirChambresActionPerformed(evt);
+        btnRafraichirChambres.setCursor(
+            new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+        );
+        btnRafraichirChambres.addActionListener(
+            new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnRafraichirChambresActionPerformed(evt);
+                }
             }
-        });
+        );
         panelSudChambre.add(btnRafraichirChambres);
+
+        btnModifierChambre.setText("Modifier la chambre");
+        btnModifierChambre.setBackground(new java.awt.Color(234, 88, 12));
+        btnModifierChambre.setForeground(new java.awt.Color(255, 255, 255));
+        btnModifierChambre.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12)
+        );
+        btnModifierChambre.setFocusPainted(false);
+        btnModifierChambre.setContentAreaFilled(false);
+        btnModifierChambre.setOpaque(true);
+        btnModifierChambre.setCursor(
+            new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+        );
+        btnModifierChambre.setEnabled(false);
+        btnModifierChambre.addActionListener(
+            new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnModifierChambreActionPerformed(evt);
+                }
+            }
+        );
+        panelSudChambre.add(btnModifierChambre);
+
+        btnSupprimerChambre.setText("Supprimer");
+        btnSupprimerChambre.setBackground(new java.awt.Color(185, 28, 28));
+        btnSupprimerChambre.setForeground(new java.awt.Color(255, 255, 255));
+        btnSupprimerChambre.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12)
+        );
+        btnSupprimerChambre.setFocusPainted(false);
+        btnSupprimerChambre.setContentAreaFilled(false);
+        btnSupprimerChambre.setOpaque(true);
+        btnSupprimerChambre.setCursor(
+            new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+        );
+        btnSupprimerChambre.setEnabled(false);
+        btnSupprimerChambre.addActionListener(
+            new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnSupprimerChambreActionPerformed(evt);
+                }
+            }
+        );
+        panelSudChambre.add(btnSupprimerChambre);
 
         add(panelSudChambre, java.awt.BorderLayout.SOUTH);
 
         // --- Tableau ---
-        tableChambres.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[][] {},
-            new String[] { "Numéro", "Type", "Prix/nuit (€)", "État" }
-        ) {
-            public boolean isCellEditable(int row, int col) { return false; }
-        });
-        tableChambres.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tableChambres.setModel(
+            new javax.swing.table.DefaultTableModel(
+                new Object[][] {},
+                new String[] { "Numéro", "Type", "Prix/nuit ($)", "État" }
+            ) {
+                public boolean isCellEditable(int row, int col) {
+                    return false;
+                }
+            }
+        );
+        tableChambres.setAutoResizeMode(
+            javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS
+        );
         tableChambres.setRowHeight(28);
         tableChambres.setGridColor(new java.awt.Color(191, 219, 254));
         tableChambres.setSelectionBackground(new java.awt.Color(59, 130, 246));
@@ -209,46 +345,107 @@ public class ChambresGUI extends javax.swing.JPanel {
         scrollChambres.setViewportView(tableChambres);
 
         add(scrollChambres, java.awt.BorderLayout.CENTER);
-    }// </editor-fold>//GEN-END:initComponents
+    } // </editor-fold>//GEN-END:initComponents
 
-    private void btnAjouterChambreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjouterChambreActionPerformed
-        String numStr  = fieldNumChambre.getText().trim();
+    private void btnAjouterChambreActionPerformed(
+        java.awt.event.ActionEvent evt
+    ) {//GEN-FIRST:event_btnAjouterChambreActionPerformed
+        String numStr = fieldNumChambre.getText().trim();
         String prixStr = fieldPrixNuit.getText().trim();
-        String type    = (String) comboChambreType.getSelectedItem();
-        String etat    = (String) comboChambreEtat.getSelectedItem();
+        String type = (String) comboChambreType.getSelectedItem();
+        String etat = (String) comboChambreEtat.getSelectedItem();
 
-        // Vérif numéro
         if (numStr.isEmpty() || prixStr.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this,
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
                 "Le numéro et le prix sont obligatoires.",
-                "Champs manquants", javax.swing.JOptionPane.WARNING_MESSAGE);
+                "Champs manquants",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
 
         try {
-            int num      = Integer.parseInt(numStr);
-            double prix  = Double.parseDouble(prixStr);
+            int num = Integer.parseInt(numStr);
+            double prix = Double.parseDouble(prixStr);
 
             Chambre chambre = new Chambre(num, type, prix, etat);
             RequetesSQL.ajouterChambre(chambre);
             viderFormulaire();
             chargerChambres();
-
         } catch (NumberFormatException ex) {
-            // L'utilisateur a mis du texte là où on voulait des chiffres
-            javax.swing.JOptionPane.showMessageDialog(this,
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
                 "Le numéro doit être un entier et le prix un nombre décimal.",
-                "Format invalide", javax.swing.JOptionPane.ERROR_MESSAGE);
+                "Format invalide",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
         }
     }//GEN-LAST:event_btnAjouterChambreActionPerformed
 
-    private void btnRafraichirChambresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRafraichirChambresActionPerformed
+    private void btnRafraichirChambresActionPerformed(
+        java.awt.event.ActionEvent evt
+    ) {//GEN-FIRST:event_btnRafraichirChambresActionPerformed
         chargerChambres();
     }//GEN-LAST:event_btnRafraichirChambresActionPerformed
 
+    private void btnModifierChambreActionPerformed(
+        java.awt.event.ActionEvent evt
+    ) {//GEN-FIRST:event_btnModifierChambreActionPerformed
+        if (numChambreEnEdition < 0) return;
+
+        String prixStr = fieldPrixNuit.getText().trim();
+        String type = (String) comboChambreType.getSelectedItem();
+        String etat = (String) comboChambreEtat.getSelectedItem();
+
+        if (prixStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Le prix est obligatoire.",
+                "Champs manquants",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        try {
+            double prix = Double.parseDouble(prixStr);
+            Chambre chambre = new Chambre(numChambreEnEdition, type, prix, etat);
+            RequetesSQL.modifierChambre(chambre);
+            viderFormulaire();
+            chargerChambres();
+        } catch (NumberFormatException ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Le prix doit être un nombre décimal.",
+                "Format invalide",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_btnModifierChambreActionPerformed
+
+    private void btnSupprimerChambreActionPerformed(
+        java.awt.event.ActionEvent evt
+    ) {//GEN-FIRST:event_btnSupprimerChambreActionPerformed
+        if (numChambreEnEdition < 0) return;
+
+        int confirmation = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Supprimer la chambre #" + numChambreEnEdition + " ?",
+            "Confirmation", javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+
+        if (confirmation == javax.swing.JOptionPane.YES_OPTION) {
+            RequetesSQL.supprimerChambre(numChambreEnEdition);
+            viderFormulaire();
+            chargerChambres();
+        }
+    }//GEN-LAST:event_btnSupprimerChambreActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAjouterChambre;
+    private javax.swing.JButton btnModifierChambre;
     private javax.swing.JButton btnRafraichirChambres;
+    private javax.swing.JButton btnSupprimerChambre;
     private javax.swing.JComboBox<String> comboChambreEtat;
     private javax.swing.JComboBox<String> comboChambreType;
     private javax.swing.JTextField fieldNumChambre;

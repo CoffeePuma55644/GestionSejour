@@ -23,10 +23,15 @@ public class Service {
     /**
      * Constructeur complet.
      */
-    public Service(int idService, String nomService, String categorie, double prixUnitaire) {
-        this.idService    = idService;
-        this.nomService   = nomService;
-        this.categorie    = categorie;
+    public Service(
+        int idService,
+        String nomService,
+        String categorie,
+        double prixUnitaire
+    ) {
+        this.idService = idService;
+        this.nomService = nomService;
+        this.categorie = categorie;
         this.prixUnitaire = prixUnitaire;
     }
 
@@ -34,8 +39,8 @@ public class Service {
      * Sans id : pour avant l'insertion en BDD.
      */
     public Service(String nomService, String categorie, double prixUnitaire) {
-        this.nomService   = nomService;
-        this.categorie    = categorie;
+        this.nomService = nomService;
+        this.categorie = categorie;
         this.prixUnitaire = prixUnitaire;
     }
 
@@ -81,8 +86,16 @@ public class Service {
      * Pour afficher ou déboguer.
      */
     public String toString() {
-        return "Service #" + idService + " - " + nomService
-                + " | Catégorie : " + categorie
-                + " | Prix unitaire : " + prixUnitaire + "€";
+        return (
+            "Service #" +
+            idService +
+            " - " +
+            nomService +
+            " | Catégorie : " +
+            categorie +
+            " | Prix unitaire : " +
+            prixUnitaire +
+            "$"
+        );
     }
 }

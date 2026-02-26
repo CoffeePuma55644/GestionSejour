@@ -456,6 +456,48 @@
                           parameters="java.awt.event.ActionEvent" handler="btnRafraichirSejoursActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="btnModifierSejour">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Modifier le séjour"/>
+            <Property name="background" type="java.awt.Color">
+              <Color red="234" green="88" blue="12" type="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color">
+              <Color red="255" green="255" blue="255" type="1"/>
+            </Property>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="0"/></Property>
+            <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="cursor" type="java.awt.Cursor"><Cursor type="12"/></Property>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener"
+                          parameters="java.awt.event.ActionEvent" handler="btnModifierSejourActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSupprimerSejour">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Supprimer"/>
+            <Property name="background" type="java.awt.Color">
+              <Color red="185" green="28" blue="28" type="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color">
+              <Color red="255" green="255" blue="255" type="1"/>
+            </Property>
+            <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="0"/></Property>
+            <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="cursor" type="java.awt.Cursor"><Cursor type="12"/></Property>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener"
+                          parameters="java.awt.event.ActionEvent" handler="btnSupprimerSejourActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
 
