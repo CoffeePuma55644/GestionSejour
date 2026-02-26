@@ -17,8 +17,12 @@ public class ChambresGUI extends javax.swing.JPanel {
      */
     public ChambresGUI() {
         initComponents();
-        styleTableHeader();
-        chargerChambres();
+        try {
+            styleTableHeader();
+            chargerChambres();
+        } catch (Exception e) {
+            System.out.println("ChambresGUI : chargement initial échoué – " + e.getMessage());
+        }
     }
 
     /**
@@ -152,6 +156,8 @@ public class ChambresGUI extends javax.swing.JPanel {
         btnAjouterChambre.setForeground(new java.awt.Color(255, 255, 255));
         btnAjouterChambre.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
         btnAjouterChambre.setFocusPainted(false);
+        btnAjouterChambre.setContentAreaFilled(false);
+        btnAjouterChambre.setOpaque(true);
         btnAjouterChambre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAjouterChambre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,6 +182,8 @@ public class ChambresGUI extends javax.swing.JPanel {
         btnRafraichirChambres.setForeground(new java.awt.Color(255, 255, 255));
         btnRafraichirChambres.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12));
         btnRafraichirChambres.setFocusPainted(false);
+        btnRafraichirChambres.setContentAreaFilled(false);
+        btnRafraichirChambres.setOpaque(true);
         btnRafraichirChambres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRafraichirChambres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

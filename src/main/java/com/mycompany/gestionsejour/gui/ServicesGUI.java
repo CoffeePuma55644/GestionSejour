@@ -16,8 +16,12 @@ public class ServicesGUI extends javax.swing.JPanel {
      */
     public ServicesGUI() {
         initComponents();
-        styleTableHeader();
-        chargerServices();
+        try {
+            styleTableHeader();
+            chargerServices();
+        } catch (Exception e) {
+            System.out.println("ServicesGUI : chargement initial échoué – " + e.getMessage());
+        }
     }
 
     /**
@@ -75,75 +79,91 @@ public class ServicesGUI extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        // --- Formulaire haut ---
+        panelFormService.setBackground(new java.awt.Color(241, 245, 249));
         panelFormService.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajouter un service"));
+        panelFormService.setPreferredSize(new java.awt.Dimension(0, 170));
         panelFormService.setLayout(new java.awt.GridBagLayout());
 
         labelNomService.setText("Nom du service :");
+        labelNomService.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(12, 15, 5, 5);
         panelFormService.add(labelNomService, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 1; gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(12, 5, 5, 15);
         panelFormService.add(fieldNomService, gridBagConstraints);
 
         labelCategorieService.setText("Catégorie :");
+        labelCategorieService.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.gridx = 2; gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(12, 15, 5, 5);
         panelFormService.add(labelCategorieService, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 3; gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(12, 5, 5, 15);
         panelFormService.add(fieldCategorieService, gridBagConstraints);
 
         labelPrixUnitaire.setText("Prix unitaire (€) :");
+        labelPrixUnitaire.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 5);
         panelFormService.add(labelPrixUnitaire, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 1; gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 15);
         panelFormService.add(fieldPrixUnitaire, gridBagConstraints);
 
         btnAjouterService.setText("Ajouter le service");
+        btnAjouterService.setBackground(new java.awt.Color(37, 99, 235));
+        btnAjouterService.setForeground(new java.awt.Color(255, 255, 255));
+        btnAjouterService.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
         btnAjouterService.setFocusPainted(false);
+        btnAjouterService.setContentAreaFilled(false);
+        btnAjouterService.setOpaque(true);
+        btnAjouterService.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAjouterService.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAjouterServiceActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.CENTER;
         gridBagConstraints.insets = new java.awt.Insets(12, 15, 12, 15);
         panelFormService.add(btnAjouterService, gridBagConstraints);
 
         add(panelFormService, java.awt.BorderLayout.NORTH);
 
+        // --- Barre bas ---
+        panelSudService.setBackground(new java.awt.Color(241, 245, 249));
+        panelSudService.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
         btnRafraichirServices.setText("Rafraîchir la liste");
+        btnRafraichirServices.setBackground(new java.awt.Color(30, 58, 138));
+        btnRafraichirServices.setForeground(new java.awt.Color(255, 255, 255));
+        btnRafraichirServices.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12));
         btnRafraichirServices.setFocusPainted(false);
+        btnRafraichirServices.setContentAreaFilled(false);
+        btnRafraichirServices.setOpaque(true);
+        btnRafraichirServices.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRafraichirServices.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRafraichirServicesActionPerformed(evt);
@@ -153,24 +173,18 @@ public class ServicesGUI extends javax.swing.JPanel {
 
         add(panelSudService, java.awt.BorderLayout.SOUTH);
 
+        // --- Tableau ---
         tableServices.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Nom", "Catégorie", "Prix unitaire (€)"
-            }
+            new Object[][] {},
+            new String[] { "ID", "Nom", "Catégorie", "Prix unitaire (€)" }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
+            public boolean isCellEditable(int row, int col) { return false; }
         });
         tableServices.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tableServices.setRowHeight(28);
+        tableServices.setGridColor(new java.awt.Color(191, 219, 254));
+        tableServices.setSelectionBackground(new java.awt.Color(59, 130, 246));
+        tableServices.setSelectionForeground(new java.awt.Color(255, 255, 255));
         scrollServices.setViewportView(tableServices);
 
         add(scrollServices, java.awt.BorderLayout.CENTER);

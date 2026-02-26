@@ -16,8 +16,12 @@ public class ClientsGUI extends javax.swing.JPanel {
      */
     public ClientsGUI() {
         initComponents();
-        styleTableHeader();
-        chargerClients();
+        try {
+            styleTableHeader();
+            chargerClients();
+        } catch (Exception e) {
+            System.out.println("ClientsGUI : chargement initial échoué – " + e.getMessage());
+        }
     }
 
     /**
@@ -151,6 +155,8 @@ public class ClientsGUI extends javax.swing.JPanel {
         btnAjouterClient.setForeground(new java.awt.Color(255, 255, 255));
         btnAjouterClient.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
         btnAjouterClient.setFocusPainted(false);
+        btnAjouterClient.setContentAreaFilled(false);
+        btnAjouterClient.setOpaque(true);
         btnAjouterClient.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAjouterClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,6 +181,8 @@ public class ClientsGUI extends javax.swing.JPanel {
         btnRafraichirClients.setForeground(new java.awt.Color(255, 255, 255));
         btnRafraichirClients.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12));
         btnRafraichirClients.setFocusPainted(false);
+        btnRafraichirClients.setContentAreaFilled(false);
+        btnRafraichirClients.setOpaque(true);
         btnRafraichirClients.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRafraichirClients.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
