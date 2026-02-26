@@ -11,6 +11,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ChambresGUI extends javax.swing.JPanel {
 
+    /** Numéro de la chambre sélectionnée pour modification. -1 = aucune. */
+    private int numChambreEnEdition = -1;
+
     /**
      * Construction et chargement immédiat.
      */
@@ -19,6 +22,7 @@ public class ChambresGUI extends javax.swing.JPanel {
         try {
             styleTableHeader();
             chargerChambres();
+            configurerSelectionTable();
         } catch (Exception e) {
             System.out.println(
                 "ChambresGUI : chargement initial échoué – " + e.getMessage()
@@ -36,6 +40,32 @@ public class ChambresGUI extends javax.swing.JPanel {
         tableChambres
             .getTableHeader()
             .setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+    }
+
+    /**
+     * Quand on clique sur une ligne, on pré-remplit le formulaire pour édition.
+     */
+    private void configurerSelectionTable() {
+        tableChambres.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = tableChambres.getSelectedRow();
+                if (row >= 0) {
+                    DefaultTableModel model = (DefaultTableModel) tableChambres.getModel();
+                    numChambreEnEdition = (int) model.getValueAt(row, 0);
+                    fieldNumChambre.setText(String.valueOf(numChambreEnEdition));
+                    fieldNumChambre.setEditable(false);
+                    String type = (String) model.getValueAt(row, 1);
+                    comboChambreType.setSelectedItem(type);
+                    fieldPrixNuit.setText(String.valueOf(model.getValueAt(row, 2)));
+                    String etat = (String) model.getValueAt(row, 3);
+                    comboChambreEtat.setSelectedItem(etat);
+                    panelFormChambre.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                        "Modifier la chambre #" + numChambreEnEdition));
+                    btnModifierChambre.setEnabled(true);
+                    btnSupprimerChambre.setEnabled(true);
+                }
+            }
+        });
     }
 
     /**
@@ -63,9 +93,15 @@ public class ChambresGUI extends javax.swing.JPanel {
      */
     private void viderFormulaire() {
         fieldNumChambre.setText("");
+        fieldNumChambre.setEditable(true);
         fieldPrixNuit.setText("");
         comboChambreType.setSelectedIndex(0);
         comboChambreEtat.setSelectedIndex(0);
+        numChambreEnEdition = -1;
+        tableChambres.clearSelection();
+        panelFormChambre.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajouter une chambre"));
+        btnModifierChambre.setEnabled(false);
+        btnSupprimerChambre.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -85,6 +121,8 @@ public class ChambresGUI extends javax.swing.JPanel {
         btnAjouterChambre = new javax.swing.JButton();
         panelSudChambre = new javax.swing.JPanel();
         btnRafraichirChambres = new javax.swing.JButton();
+        btnModifierChambre = new javax.swing.JButton();
+        btnSupprimerChambre = new javax.swing.JButton();
         scrollChambres = new javax.swing.JScrollPane();
         tableChambres = new javax.swing.JTable();
 
@@ -240,6 +278,50 @@ public class ChambresGUI extends javax.swing.JPanel {
         );
         panelSudChambre.add(btnRafraichirChambres);
 
+        btnModifierChambre.setText("Modifier la chambre");
+        btnModifierChambre.setBackground(new java.awt.Color(234, 88, 12));
+        btnModifierChambre.setForeground(new java.awt.Color(255, 255, 255));
+        btnModifierChambre.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12)
+        );
+        btnModifierChambre.setFocusPainted(false);
+        btnModifierChambre.setContentAreaFilled(false);
+        btnModifierChambre.setOpaque(true);
+        btnModifierChambre.setCursor(
+            new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+        );
+        btnModifierChambre.setEnabled(false);
+        btnModifierChambre.addActionListener(
+            new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnModifierChambreActionPerformed(evt);
+                }
+            }
+        );
+        panelSudChambre.add(btnModifierChambre);
+
+        btnSupprimerChambre.setText("Supprimer");
+        btnSupprimerChambre.setBackground(new java.awt.Color(185, 28, 28));
+        btnSupprimerChambre.setForeground(new java.awt.Color(255, 255, 255));
+        btnSupprimerChambre.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12)
+        );
+        btnSupprimerChambre.setFocusPainted(false);
+        btnSupprimerChambre.setContentAreaFilled(false);
+        btnSupprimerChambre.setOpaque(true);
+        btnSupprimerChambre.setCursor(
+            new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+        );
+        btnSupprimerChambre.setEnabled(false);
+        btnSupprimerChambre.addActionListener(
+            new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnSupprimerChambreActionPerformed(evt);
+                }
+            }
+        );
+        panelSudChambre.add(btnSupprimerChambre);
+
         add(panelSudChambre, java.awt.BorderLayout.SOUTH);
 
         // --- Tableau ---
@@ -267,14 +349,12 @@ public class ChambresGUI extends javax.swing.JPanel {
 
     private void btnAjouterChambreActionPerformed(
         java.awt.event.ActionEvent evt
-    ) {
-        //GEN-FIRST:event_btnAjouterChambreActionPerformed
+    ) {//GEN-FIRST:event_btnAjouterChambreActionPerformed
         String numStr = fieldNumChambre.getText().trim();
         String prixStr = fieldPrixNuit.getText().trim();
         String type = (String) comboChambreType.getSelectedItem();
         String etat = (String) comboChambreEtat.getSelectedItem();
 
-        // Vérif numéro
         if (numStr.isEmpty() || prixStr.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(
                 this,
@@ -294,7 +374,6 @@ public class ChambresGUI extends javax.swing.JPanel {
             viderFormulaire();
             chargerChambres();
         } catch (NumberFormatException ex) {
-            // L'utilisateur a mis du texte là où on voulait des chiffres
             javax.swing.JOptionPane.showMessageDialog(
                 this,
                 "Le numéro doit être un entier et le prix un nombre décimal.",
@@ -302,18 +381,71 @@ public class ChambresGUI extends javax.swing.JPanel {
                 javax.swing.JOptionPane.ERROR_MESSAGE
             );
         }
-    } //GEN-LAST:event_btnAjouterChambreActionPerformed
+    }//GEN-LAST:event_btnAjouterChambreActionPerformed
 
     private void btnRafraichirChambresActionPerformed(
         java.awt.event.ActionEvent evt
-    ) {
-        //GEN-FIRST:event_btnRafraichirChambresActionPerformed
+    ) {//GEN-FIRST:event_btnRafraichirChambresActionPerformed
         chargerChambres();
-    } //GEN-LAST:event_btnRafraichirChambresActionPerformed
+    }//GEN-LAST:event_btnRafraichirChambresActionPerformed
+
+    private void btnModifierChambreActionPerformed(
+        java.awt.event.ActionEvent evt
+    ) {//GEN-FIRST:event_btnModifierChambreActionPerformed
+        if (numChambreEnEdition < 0) return;
+
+        String prixStr = fieldPrixNuit.getText().trim();
+        String type = (String) comboChambreType.getSelectedItem();
+        String etat = (String) comboChambreEtat.getSelectedItem();
+
+        if (prixStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Le prix est obligatoire.",
+                "Champs manquants",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        try {
+            double prix = Double.parseDouble(prixStr);
+            Chambre chambre = new Chambre(numChambreEnEdition, type, prix, etat);
+            RequetesSQL.modifierChambre(chambre);
+            viderFormulaire();
+            chargerChambres();
+        } catch (NumberFormatException ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Le prix doit être un nombre décimal.",
+                "Format invalide",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_btnModifierChambreActionPerformed
+
+    private void btnSupprimerChambreActionPerformed(
+        java.awt.event.ActionEvent evt
+    ) {//GEN-FIRST:event_btnSupprimerChambreActionPerformed
+        if (numChambreEnEdition < 0) return;
+
+        int confirmation = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Supprimer la chambre #" + numChambreEnEdition + " ?",
+            "Confirmation", javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+
+        if (confirmation == javax.swing.JOptionPane.YES_OPTION) {
+            RequetesSQL.supprimerChambre(numChambreEnEdition);
+            viderFormulaire();
+            chargerChambres();
+        }
+    }//GEN-LAST:event_btnSupprimerChambreActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAjouterChambre;
+    private javax.swing.JButton btnModifierChambre;
     private javax.swing.JButton btnRafraichirChambres;
+    private javax.swing.JButton btnSupprimerChambre;
     private javax.swing.JComboBox<String> comboChambreEtat;
     private javax.swing.JComboBox<String> comboChambreType;
     private javax.swing.JTextField fieldNumChambre;

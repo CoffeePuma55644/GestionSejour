@@ -10,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ServicesGUI extends javax.swing.JPanel {
 
+    /** ID du service sélectionné pour modification. -1 = aucun. */
+    private int idServiceEnEdition = -1;
+
     /**
      * Construction et chargement immédiat des services.
      */
@@ -18,6 +21,7 @@ public class ServicesGUI extends javax.swing.JPanel {
         try {
             styleTableHeader();
             chargerServices();
+            configurerSelectionTable();
         } catch (Exception e) {
             System.out.println(
                 "ServicesGUI : chargement initial échoué – " + e.getMessage()
@@ -35,6 +39,28 @@ public class ServicesGUI extends javax.swing.JPanel {
         tableServices
             .getTableHeader()
             .setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+    }
+
+    /**
+     * Quand on clique sur une ligne, on pré-remplit le formulaire pour édition.
+     */
+    private void configurerSelectionTable() {
+        tableServices.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = tableServices.getSelectedRow();
+                if (row >= 0) {
+                    DefaultTableModel model = (DefaultTableModel) tableServices.getModel();
+                    idServiceEnEdition = (int) model.getValueAt(row, 0);
+                    fieldNomService.setText((String) model.getValueAt(row, 1));
+                    fieldCategorieService.setText((String) model.getValueAt(row, 2));
+                    fieldPrixUnitaire.setText(String.valueOf(model.getValueAt(row, 3)));
+                    panelFormService.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                        "Modifier le service #" + idServiceEnEdition));
+                    btnModifierService.setEnabled(true);
+                    btnSupprimerService.setEnabled(true);
+                }
+            }
+        });
     }
 
     /**
@@ -58,12 +84,17 @@ public class ServicesGUI extends javax.swing.JPanel {
     }
 
     /**
-     * Vide le formulaire après ajout. Propre, prêt pour le suivant.
+     * Vide le formulaire et repasse en mode "Ajouter".
      */
     private void viderFormulaire() {
         fieldNomService.setText("");
         fieldCategorieService.setText("");
         fieldPrixUnitaire.setText("");
+        idServiceEnEdition = -1;
+        tableServices.clearSelection();
+        panelFormService.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajouter un service"));
+        btnModifierService.setEnabled(false);
+        btnSupprimerService.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -81,6 +112,8 @@ public class ServicesGUI extends javax.swing.JPanel {
         btnAjouterService = new javax.swing.JButton();
         panelSudService = new javax.swing.JPanel();
         btnRafraichirServices = new javax.swing.JButton();
+        btnModifierService = new javax.swing.JButton();
+        btnSupprimerService = new javax.swing.JButton();
         scrollServices = new javax.swing.JScrollPane();
         tableServices = new javax.swing.JTable();
 
@@ -207,6 +240,50 @@ public class ServicesGUI extends javax.swing.JPanel {
         );
         panelSudService.add(btnRafraichirServices);
 
+        btnModifierService.setText("Modifier le service");
+        btnModifierService.setBackground(new java.awt.Color(234, 88, 12));
+        btnModifierService.setForeground(new java.awt.Color(255, 255, 255));
+        btnModifierService.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12)
+        );
+        btnModifierService.setFocusPainted(false);
+        btnModifierService.setContentAreaFilled(false);
+        btnModifierService.setOpaque(true);
+        btnModifierService.setCursor(
+            new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+        );
+        btnModifierService.setEnabled(false);
+        btnModifierService.addActionListener(
+            new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnModifierServiceActionPerformed(evt);
+                }
+            }
+        );
+        panelSudService.add(btnModifierService);
+
+        btnSupprimerService.setText("Supprimer");
+        btnSupprimerService.setBackground(new java.awt.Color(185, 28, 28));
+        btnSupprimerService.setForeground(new java.awt.Color(255, 255, 255));
+        btnSupprimerService.setFont(
+            new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12)
+        );
+        btnSupprimerService.setFocusPainted(false);
+        btnSupprimerService.setContentAreaFilled(false);
+        btnSupprimerService.setOpaque(true);
+        btnSupprimerService.setCursor(
+            new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+        );
+        btnSupprimerService.setEnabled(false);
+        btnSupprimerService.addActionListener(
+            new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnSupprimerServiceActionPerformed(evt);
+                }
+            }
+        );
+        panelSudService.add(btnSupprimerService);
+
         add(panelSudService, java.awt.BorderLayout.SOUTH);
 
         // --- Tableau ---
@@ -272,12 +349,67 @@ public class ServicesGUI extends javax.swing.JPanel {
         java.awt.event.ActionEvent evt
     ) {
         //GEN-FIRST:event_btnRafraichirServicesActionPerformed
+        viderFormulaire();
         chargerServices();
     } //GEN-LAST:event_btnRafraichirServicesActionPerformed
 
+    private void btnModifierServiceActionPerformed(
+        java.awt.event.ActionEvent evt
+    ) {//GEN-FIRST:event_btnModifierServiceActionPerformed
+        if (idServiceEnEdition < 0) return;
+
+        String nom = fieldNomService.getText().trim();
+        String categorie = fieldCategorieService.getText().trim();
+        String prixStr = fieldPrixUnitaire.getText().trim();
+
+        if (nom.isEmpty() || categorie.isEmpty() || prixStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Tous les champs sont obligatoires.",
+                "Champs manquants",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        try {
+            double prix = Double.parseDouble(prixStr);
+            Service service = new Service(idServiceEnEdition, nom, categorie, prix);
+            RequetesSQL.modifierService(service);
+            viderFormulaire();
+            chargerServices();
+        } catch (NumberFormatException ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Le prix unitaire doit être un nombre décimal (ex: 12.50).",
+                "Format invalide",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_btnModifierServiceActionPerformed
+
+    private void btnSupprimerServiceActionPerformed(
+        java.awt.event.ActionEvent evt
+    ) {//GEN-FIRST:event_btnSupprimerServiceActionPerformed
+        if (idServiceEnEdition < 0) return;
+
+        int confirmation = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Supprimer le service #" + idServiceEnEdition + " ?",
+            "Confirmation", javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+
+        if (confirmation == javax.swing.JOptionPane.YES_OPTION) {
+            RequetesSQL.supprimerService(idServiceEnEdition);
+            viderFormulaire();
+            chargerServices();
+        }
+    }//GEN-LAST:event_btnSupprimerServiceActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAjouterService;
+    private javax.swing.JButton btnModifierService;
     private javax.swing.JButton btnRafraichirServices;
+    private javax.swing.JButton btnSupprimerService;
     private javax.swing.JTextField fieldCategorieService;
     private javax.swing.JTextField fieldNomService;
     private javax.swing.JTextField fieldPrixUnitaire;
