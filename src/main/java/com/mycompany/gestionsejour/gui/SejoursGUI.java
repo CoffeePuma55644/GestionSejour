@@ -21,8 +21,12 @@ public class SejoursGUI extends javax.swing.JPanel {
      */
     public SejoursGUI() {
         initComponents();
-        styleTableHeader();
-        chargerSejours();
+        try {
+            styleTableHeader();
+            chargerSejours();
+        } catch (Exception e) {
+            System.out.println("SejoursGUI : chargement initial échoué – " + e.getMessage());
+        }
     }
 
     /**
@@ -219,6 +223,8 @@ public class SejoursGUI extends javax.swing.JPanel {
         btnAjouterSejour.setForeground(new java.awt.Color(255, 255, 255));
         btnAjouterSejour.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
         btnAjouterSejour.setFocusPainted(false);
+        btnAjouterSejour.setContentAreaFilled(false);
+        btnAjouterSejour.setOpaque(true);
         btnAjouterSejour.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAjouterSejour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,6 +315,8 @@ public class SejoursGUI extends javax.swing.JPanel {
         btnAjouterConso.setForeground(new java.awt.Color(255, 255, 255));
         btnAjouterConso.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
         btnAjouterConso.setFocusPainted(false);
+        btnAjouterConso.setContentAreaFilled(false);
+        btnAjouterConso.setOpaque(true);
         btnAjouterConso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAjouterConso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,6 +348,8 @@ public class SejoursGUI extends javax.swing.JPanel {
         btnRafraichirSejours.setForeground(new java.awt.Color(255, 255, 255));
         btnRafraichirSejours.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 12));
         btnRafraichirSejours.setFocusPainted(false);
+        btnRafraichirSejours.setContentAreaFilled(false);
+        btnRafraichirSejours.setOpaque(true);
         btnRafraichirSejours.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRafraichirSejours.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -165,6 +165,8 @@
             </Property>
             <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="13" style="1"/></Property>
             <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
             <Property name="cursor" type="java.awt.Cursor"><Cursor type="12"/></Property>
           </Properties>
           <Events>
@@ -202,6 +204,8 @@
             </Property>
             <Property name="font" type="java.awt.Font"><Font name="SansSerif" size="12" style="0"/></Property>
             <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
             <Property name="cursor" type="java.awt.Cursor"><Cursor type="12"/></Property>
           </Properties>
           <Events>
