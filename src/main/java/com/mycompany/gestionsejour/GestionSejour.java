@@ -1,5 +1,6 @@
 package com.mycompany.gestionsejour;
 
+import com.mycompany.gestionsejour.gui.MainGUI;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -20,14 +21,14 @@ public class GestionSejour {
                 // Croix rouge = fin du programme
                 fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                // 800x600, classique
-                fenetre.setSize(800, 600);
+                // 1200x750 pour avoir de la place, on est pas des sauvages
+                fenetre.setSize(1200, 750);
 
                 // On centre, c'est plus propre
                 fenetre.setLocationRelativeTo(null);
 
-                // On branche l'interface générée par NetBeans
-                fenetre.add(new Interface());
+                // Notre beau MainGUI avec sa sidebar et son CardLayout
+                fenetre.add(new MainGUI());
 
                 // Et on allume tout ça
                 fenetre.setVisible(true);

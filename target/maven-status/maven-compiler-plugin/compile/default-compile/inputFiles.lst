@@ -1,7 +1,11 @@
 C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\database\ConnexionBDD.java
 C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\database\RequetesSQL.java
 C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\GestionSejour.java
-C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\Interface.java
+C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\gui\ChambresGUI.java
+C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\gui\ClientsGUI.java
+C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\gui\MainGUI.java
+C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\gui\SejoursGUI.java
+C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\gui\ServicesGUI.java
 C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\modeles\Chambre.java
 C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\modeles\Client.java
 C:\Dev\GestionSejour\src\main\java\com\mycompany\gestionsejour\modeles\Consommation.java
