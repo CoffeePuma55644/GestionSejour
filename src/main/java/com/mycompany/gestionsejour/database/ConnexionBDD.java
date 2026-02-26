@@ -9,14 +9,14 @@ import java.sql.SQLException;
  */
 public class ConnexionBDD {
 
-    // mmmh... mon pc slm...
-    private static final String URL      = "jdbc:mysql://localhost:3306/gestionsejourjava?connectTimeout=3000&socketTimeout=5000";
+    // Supabase PostgreSQL - Session Pooler (IPv4 compatible)
+    private static final String URL      = "jdbc:postgresql://aws-1-eu-central-1.pooler.supabase.com:5432/postgres?sslmode=require&connectTimeout=5&socketTimeout=10";
 
-    // C'est moi le maitre ici
-    private static final String USER     = "root";
+    // Supabase user
+    private static final String USER     = "postgres.ipwkimnglyerdknwnhwp";
 
-    // Mon mot de passe
-    private static final String PASSWORD = "cpuma";
+    // Supabase password
+    private static final String PASSWORD = "o2yK04KxIAeFrEoa";
 
     /**
      * Ouvre et ferme la porte de mySQL
