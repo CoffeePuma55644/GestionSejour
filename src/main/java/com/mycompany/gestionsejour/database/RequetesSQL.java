@@ -225,8 +225,8 @@ public class RequetesSQL {
             Connection conn = ConnexionBDD.getConnexion();
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, sejour.getDateArrivee());
-            stmt.setString(2, sejour.getDateDepart());
+            stmt.setDate(1, java.sql.Date.valueOf(sejour.getDateArrivee()));
+            stmt.setDate(2, java.sql.Date.valueOf(sejour.getDateDepart()));
             stmt.setInt(3, sejour.getNbPersonnes());
             stmt.setString(4, sejour.getStatutPaiement());
             stmt.setInt(5, sejour.getClient().getIdClient());
